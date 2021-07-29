@@ -1,2 +1,2 @@
 # Racing Game Project
-Made with Unity3D and ML-Agents Library
+3D Racing game  made with Unity and ML-Agents Library.
