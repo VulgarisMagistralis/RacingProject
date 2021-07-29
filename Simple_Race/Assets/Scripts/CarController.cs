@@ -29,7 +29,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         private float m_GearFactor;
         private float m_OldRotation;
         private float m_CurrentTorque;
-        private Rigidbody m_Rigidbody;
+        Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
         public bool Skidding { get; private set; }
         public float BrakeInput { get; private set; }
@@ -40,13 +40,17 @@ namespace UnityStandardAssets.Vehicles.Car{
         public float AccelInput { get; private set; }
         // Use this for initialization
         private void Start(){
+            m_Rigidbody = gameObject.GetComponent<Rigidbody>();
+            m_Rigidbody.isKinematic = false;
+            m_Rigidbody.useGravity = true;
+            m_Rigidbody.WakeUp();
+            m_Rigidbody.AddForce(new Vector3(10,0,0));
             m_WheelMeshLocalRotations = new Quaternion[4];
             for(int i = 0; i < 4; i++) m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
             m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
             m_MaxHandbrakeTorque = float.MaxValue;
-            m_Rigidbody = GetComponent<Rigidbody>();
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
-            //m_Rigidbody.constraints = RigidbodyConstraints.None;
+            m_Rigidbody.constraints = RigidbodyConstraints.None;
         }
         private void GearChanging(){
             float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
@@ -104,10 +108,10 @@ namespace UnityStandardAssets.Vehicles.Car{
                 m_WheelColliders[2].brakeTorque = hbTorque;
                 m_WheelColliders[3].brakeTorque = hbTorque;
             }
-            //CalculateRevs();
-            //GearChanging();
-            //AddDownForce();
-            //CheckForWheelSpin();
+            CalculateRevs();
+            GearChanging();
+            AddDownForce();
+            CheckForWheelSpin();
             TractionControl();
         }
         private void CapSpeed() {
