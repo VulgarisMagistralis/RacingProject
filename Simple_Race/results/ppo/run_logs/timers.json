@@ -1,0 +1,97 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1618761530",
+        "python_version": "3.8.6 (default, Jan 27 2021, 15:42:20) \n[GCC 10.2.0]",
+        "command_line_arguments": "/media/vulgaris/DATA/UnityLibrary/Simple_Race/Simple_Race/venv/bin/mlagents-learn --force",
+        "mlagents_version": "0.25.1",
+        "mlagents_envs_version": "0.25.1",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.8.1+cu102",
+        "numpy_version": "1.20.2",
+        "end_time_seconds": "1618761555"
+    },
+    "total": 25.323946370001067,
+    "count": 1,
+    "self": 0.0018289310010004556,
+    "children": {
+        "run_training.setup": {
+            "total": 0.011531918999025947,
+            "count": 1,
+            "self": 0.011531918999025947
+        },
+        "TrainerController.start_learning": {
+            "total": 25.31058552000104,
+            "count": 1,
+            "self": 0.00018628699945111293,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 8.853051326999775,
+                    "count": 1,
+                    "self": 8.853051326999775
+                },
+                "TrainerController.advance": {
+                    "total": 16.38947659800033,
+                    "count": 1,
+                    "self": 9.118000889429823e-06,
+                    "children": {
+                        "env_step": {
+                            "total": 16.38946747999944,
+                            "count": 1,
+                            "self": 16.389462191998973,
+                            "children": {
+                                "SubprocessEnvManager._take_step": {
+                                    "total": 5.288000465952791e-06,
+                                    "count": 1,
+                                    "self": 5.288000465952791e-06
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainer_threads": {
+                    "total": 1.870300002337899e-05,
+                    "count": 1,
+                    "self": 1.870300002337899e-05,
+                    "children": {
+                        "thread_root": {
+                            "total": 0.0,
+                            "count": 0,
+                            "is_parallel": true,
+                            "self": 0.0,
+                            "children": {
+                                "trainer_advance": {
+                                    "total": 16.373329387950434,
+                                    "count": 2539,
+                                    "is_parallel": true,
+                                    "self": 0.03030435989421676,
+                                    "children": {
+                                        "process_trajectory": {
+                                            "total": 16.343025028056218,
+                                            "count": 2539,
+                                            "is_parallel": true,
+                                            "self": 16.343025028056218
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "TrainerController._save_models": {
+                    "total": 0.06785260500146251,
+                    "count": 1,
+                    "self": 0.0002839900025719544,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.06756861499889055,
+                            "count": 1,
+                            "self": 0.06756861499889055
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
