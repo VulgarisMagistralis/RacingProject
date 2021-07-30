@@ -62,6 +62,9 @@ crashlytics-build.properties
 # ML Agents Environment
 venv/
 
+# ML Agents Timer
+Timers/
+
 # Demonstrations files for RL training
 Demos/
 Assets/Demonstrations/
