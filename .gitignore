@@ -63,7 +63,7 @@ crashlytics-build.properties
 venv/
 
 # ML Agents Timer
-Timers/
+Assets/ML_Agents/Timers/
 
 # Demonstrations files for RL training
 Demos/
