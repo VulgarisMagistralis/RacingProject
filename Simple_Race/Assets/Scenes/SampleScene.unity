@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needle: {fileID: 1310379330}
-  car: {fileID: 0}
+  car: {fileID: 1513044666}
 --- !u!1 &406379118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,6 +1081,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8207370333205314172, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
   m_PrefabInstance: {fileID: 8595923205775357232}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1513044666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+  m_PrefabInstance: {fileID: 8595923205775357232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513044665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1513044673
 MonoBehaviour:
   m_ObjectHideFlags: 0
