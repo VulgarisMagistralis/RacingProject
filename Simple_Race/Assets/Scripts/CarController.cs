@@ -110,7 +110,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         }
         private void CapSpeed() {
             float speed = m_Rigidbody.velocity.magnitude;
-            switch (m_SpeedType) {
+            switch(m_SpeedType) {
                 case SpeedType.MPH:
                     speed *= 2.23693629f;
                     if(speed > m_Topspeed) m_Rigidbody.velocity = (m_Topspeed / 2.23693629f) * m_Rigidbody.velocity.normalized;
@@ -130,7 +130,7 @@ namespace UnityStandardAssets.Vehicles.Car{
                 if(CurrentSpeed > 5 && Vector3.Angle(transform.forward, m_Rigidbody.velocity) < 50f) m_WheelColliders[i].brakeTorque = m_BrakeTorque*footbrake;
                 else if(footbrake > 0){
                     m_WheelColliders[i].brakeTorque = 0f;
-                    m_WheelColliders[i].motorTorque = -m_ReverseTorque*footbrake;
+                    m_WheelColliders[i].motorTorque = -m_ReverseTorque * footbrake;
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             for(int i = 0; i < 4; i++) if(m_WheelEffects[i].PlayingAudio) return true;
             return false;
         }
-        public void ResetCar(){ // still carries input / momentum?
+        public void ResetCar(){
             this.m_Rigidbody.velocity = Vector3.zero;
             this.m_Rigidbody.angularVelocity = Vector3.zero;
             this.m_Rigidbody.inertiaTensorRotation = Quaternion.identity;

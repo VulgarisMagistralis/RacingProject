@@ -87,6 +87,8 @@ namespace Simple_Race{
             continuousActions[1] = steer;
             continuousActions[2] = brake;
             continuousActions[3] = handbrake;
+            Debug.Log(continuousActions[0]+" "+continuousActions[1]+" "+
+            continuousActions[2]+" "+continuousActions[3]);
         }
         private bool LongTimeOffroad(){
             if(Time.time - offroadStartTime > 6) return true;

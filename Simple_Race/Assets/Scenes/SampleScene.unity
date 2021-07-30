@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513044665}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
@@ -1789,6 +1789,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BrakeTorque
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_CarDriveType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_TractionControl
       value: 1
       objectReference: {fileID: 0}
@@ -1798,7 +1806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333202405750, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333205314056, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_IsActive
@@ -1807,6 +1815,14 @@ PrefabInstance:
     - target: {fileID: 8207370333205314172, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207370333205800452, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.441
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207370333205800452, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.773
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333207569612, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_Enabled
@@ -2006,7 +2022,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8595923205444015547, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.479
+      value: 0.858
       objectReference: {fileID: 0}
     - target: {fileID: 8595923205444015547, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.z
