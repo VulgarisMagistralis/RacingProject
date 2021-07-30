@@ -2339,8 +2339,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8595923205444015547}
-  - {fileID: 8245424814017711624}
   - {fileID: 4127233937333248318}
+  - {fileID: 8207370333205800452}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2883,7 +2883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1035772682746044981, guid: 493edd2448915fba280ac7fd5c0bcdd9, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1035772682746044981, guid: 493edd2448915fba280ac7fd5c0bcdd9, type: 3}
       propertyPath: m_LocalScale.y
@@ -2936,20 +2936,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1035772682746044981, guid: 493edd2448915fba280ac7fd5c0bcdd9, type: 3}
   m_PrefabInstance: {fileID: 3970253621950333707}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4416690153521478995
+--- !u!1001 &4521879766326105439
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 8595923206212724212}
     m_Modifications:
-    - target: {fileID: 161003022333349979, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
-      propertyPath: spawnTransform
-      value: 
-      objectReference: {fileID: 8595923205444015547}
     - target: {fileID: 5703420138601804635, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5703420138601804635, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2995,14 +2991,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car_AI
       objectReference: {fileID: 0}
-    - target: {fileID: 5703420138601901859, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
---- !u!4 &8245424814017711624 stripped
+--- !u!4 &8207370333205800452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5703420138601804635, guid: 2611646cad666bda9983bbbe377305f8, type: 3}
-  m_PrefabInstance: {fileID: 4416690153521478995}
+  m_PrefabInstance: {fileID: 4521879766326105439}
   m_PrefabAsset: {fileID: 0}
