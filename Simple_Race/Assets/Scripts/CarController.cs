@@ -64,7 +64,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         // unclamped version of Lerp, to allow value to exceed the from-to range
         private static float ULerp(float from, float to, float value){ return (1.0f - value)*from + value*to; }
         private void CalculateGearFactor(){
-            float f = (1/(float) NoOfGears);
+            float f = (1 / (float) NoOfGears);
             // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
             // We smooth towards the 'target' gear factor, so that revs don't instantly snap up or down when changing gear.
             var targetGearFactor = Mathf.InverseLerp(f * m_GearNum, f * (m_GearNum + 1), Mathf.Abs(CurrentSpeed / MaxSpeed));
