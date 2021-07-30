@@ -41,16 +41,11 @@ namespace UnityStandardAssets.Vehicles.Car{
         // Use this for initialization
         private void Start(){
             m_Rigidbody = gameObject.GetComponent<Rigidbody>();
-            m_Rigidbody.isKinematic = false;
-            m_Rigidbody.useGravity = true;
-            m_Rigidbody.WakeUp();
-            m_Rigidbody.AddForce(new Vector3(10,0,0));
             m_WheelMeshLocalRotations = new Quaternion[4];
             for(int i = 0; i < 4; i++) m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
             m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
             m_MaxHandbrakeTorque = float.MaxValue;
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
-            m_Rigidbody.constraints = RigidbodyConstraints.None;
         }
         private void GearChanging(){
             float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
@@ -87,7 +82,6 @@ namespace UnityStandardAssets.Vehicles.Car{
                 m_WheelMeshes[i].transform.position = position;
                 m_WheelMeshes[i].transform.rotation = quat;
             }
-            Debug.Log(accel);
             //clamp input values
             steering = Mathf.Clamp(steering, -1, 1);
             AccelInput = accel = Mathf.Clamp(accel, 0, 1);
@@ -104,7 +98,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             //Set the handbrake.
             //Assuming that wheels 2 and 3 are the rear wheels.
             if(handbrake > 0f){
-                var hbTorque = handbrake*m_MaxHandbrakeTorque;
+                var hbTorque = handbrake * m_MaxHandbrakeTorque;
                 m_WheelColliders[2].brakeTorque = hbTorque;
                 m_WheelColliders[3].brakeTorque = hbTorque;
             }

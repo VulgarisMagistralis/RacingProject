@@ -1235,7 +1235,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1000, y: 1, z: 1000}
+  m_Size: {x: 1000, y: 0.1, z: 1000}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1513044665 stripped
 GameObject:
@@ -1667,6 +1667,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1401532532610398386, guid: 6c27da50ec69ecc40b45f98542ef7ab8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1401532532610398387, guid: 6c27da50ec69ecc40b45f98542ef7ab8, type: 3}
       propertyPath: m_Name
       value: Plane
@@ -1736,6 +1740,10 @@ PrefabInstance:
       propertyPath: spawnTransform
       value: 
       objectReference: {fileID: 1796389884}
+    - target: {fileID: 4533117536836994120, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4571368224426126600, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: MaxStep
       value: 0
@@ -1782,7 +1790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_TractionControl
-      value: 0.498
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207370333202405750, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_Interpolate
@@ -1998,7 +2006,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8595923205444015547, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.285
+      value: 0.479
       objectReference: {fileID: 0}
     - target: {fileID: 8595923205444015547, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.z
