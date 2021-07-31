@@ -54,7 +54,9 @@ namespace Simple_Race{
             sensor.AddObservation(Vector3.Dot(transform.forward, checkpoints[targetCheckpointIndex].transform.forward));
         }
         public override void OnActionReceived(ActionBuffers actions){ //translate ai input to Move() parameters
-            carController.Move(actions.ContinuousActions[1],actions.ContinuousActions[0], actions.ContinuousActions[2], actions.ContinuousActions[3]);
+            Debug.Log(actions.ContinuousActions[0]+" "+actions.ContinuousActions[1]+" "+
+            actions.ContinuousActions[2]+" "+actions.ContinuousActions[3]);
+            carController.Move(actions.ContinuousActions[1],actions.ContinuousActions[0], actions.ContinuousActions[2], 0);
         }
         private void OnTriggerEnter(Collider trigger) {
             if(trigger.CompareTag("Checkpoint"))
@@ -78,7 +80,7 @@ namespace Simple_Race{
         public override void Heuristic(in ActionBuffers actionsOut){
             int accelerate = 0, brake = 0, steer = 0, handbrake = 0;
             if(Input.GetKey(KeyCode.UpArrow)) accelerate = 1;
-            if(Input.GetKey(KeyCode.Space)) handbrake = 1;
+            //if(Input.GetKey(KeyCode.Space)) handbrake = 1;
             if(Input.GetKey(KeyCode.LeftArrow)) steer = -1;
             if(Input.GetKey(KeyCode.RightArrow)) steer = 1;
             if(Input.GetKey(KeyCode.DownArrow)) brake = 1;
