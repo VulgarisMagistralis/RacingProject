@@ -48,16 +48,16 @@ namespace UnityStandardAssets.Vehicles.Car{
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
         }
         private void GearChanging(){
-            float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
-            float upgearlimit = (1/(float) NoOfGears)*(m_GearNum + 1);
-            float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
-            if (m_GearNum > 0 && f < downgearlimit) m_GearNum--;
-            if (f > upgearlimit && (m_GearNum < (NoOfGears - 1))) m_GearNum++;
+            float f = Mathf.Abs(CurrentSpeed / MaxSpeed);
+            float upgearlimit = (1 / (float) NoOfGears) * (m_GearNum + 1);
+            float downgearlimit = (1 / (float) NoOfGears) * m_GearNum;
+            if(m_GearNum > 0 && f < downgearlimit) m_GearNum--;
+            if(f > upgearlimit && (m_GearNum < (NoOfGears - 1))) m_GearNum++;
         }
         // simple function to add a curved bias towards 1 for a value in the 0-1 range
-        private static float CurveFactor(float factor){ return 1 - (1 - factor)*(1 - factor);}
+        private static float CurveFactor(float factor){ return 1 - (1 - factor) * (1 - factor);}
         // unclamped version of Lerp, to allow value to exceed the from-to range
-        private static float ULerp(float from, float to, float value){ return (1.0f - value)*from + value*to; }
+        private static float ULerp(float from, float to, float value){ return (1.0f - value) * from + value * to; }
         private void CalculateGearFactor(){
             float f = (1 / (float) NoOfGears);
             // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
@@ -75,7 +75,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
         }
         public void Move(float steering, float accel, float footbrake, float handbrake) {
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < 4; i++){
                 Quaternion quat;
                 Vector3 position;
                 m_WheelColliders[i].GetWorldPose(out position, out quat);
@@ -175,7 +175,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             switch(m_CarDriveType) {
                 case CarDriveType.FourWheelDrive:
                     // loop through all wheels
-                    for (int i = 0; i < 4; i++) {
+                    for(int i = 0; i < 4; i++) {
                         m_WheelColliders[i].GetGroundHit(out wheelHit);
                         AdjustTorque(wheelHit.forwardSlip);
                     }
