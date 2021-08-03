@@ -1,0 +1,7 @@
+Track mesh collider convex - trigger ??
+
+
+
+
+
+--install pytorch & Driver & pip & mlagents
