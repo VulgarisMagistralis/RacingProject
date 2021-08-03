@@ -48,13 +48,17 @@ namespace Simple_Race{
             currentLapTime = 0;
             currentAvgSpeed = 0;
             targetCheckpointIndex = 0;
-            //carController.ResetCar();       
+            carController.ResetCar();       
         }
         public override void CollectObservations(VectorSensor sensor){
             sensor.AddObservation(Vector3.Dot(transform.forward, checkpoints[targetCheckpointIndex].transform.forward));
         }
         public override void OnActionReceived(ActionBuffers actions){ //translate ai input to Move() parameters
-            carController.Move(actions.ContinuousActions[1],actions.ContinuousActions[0], actions.ContinuousActions[2], actions.ContinuousActions[3]);
+           /* Debug.Log(actions.ContinuousActions[0]+" "+actions.ContinuousActions[1]+" "+
+            actions.ContinuousActions[2]+" "+actions.ContinuousActions[3]);*/
+            carController.Move(actions.ContinuousActions[1],actions.ContinuousActions[0],
+             -actions.ContinuousActions[2],actions.ContinuousActions[3]);
+
         }
         private void OnTriggerEnter(Collider trigger) {
             if(trigger.CompareTag("Checkpoint"))

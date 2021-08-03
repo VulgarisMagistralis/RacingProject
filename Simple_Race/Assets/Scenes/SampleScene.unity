@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needle: {fileID: 1310379330}
-  car: {fileID: 0}
+  car: {fileID: 1513044666}
 --- !u!1 &406379118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1081,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8207370333205314172, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
   m_PrefabInstance: {fileID: 8595923205775357232}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1513044673
+--- !u!114 &1513044666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8207370333198766068, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+  m_PrefabInstance: {fileID: 8595923205775357232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513044665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea65b38d485c374caa584a03f1de571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1513044667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1564,6 +1575,38 @@ PrefabInstance:
       propertyPath: spawnTransform
       value: 
       objectReference: {fileID: 1796389884}
+    - target: {fileID: 4394122172995814662, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BehaviorType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814662, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSpaceType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814662, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814662, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814662, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814663, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: Record
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814663, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4394122172995814663, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
+      propertyPath: DemonstrationName
+      value: Demo_Test_15
+      objectReference: {fileID: 0}
     - target: {fileID: 4571368224426126600, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: MaxStep
       value: 0
@@ -1866,7 +1909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8595923206212724212, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8595923206212724212, guid: 4706e7bf6d097e94b9a34a7da2e9e9c7, type: 3}
       propertyPath: m_LocalPosition.z
