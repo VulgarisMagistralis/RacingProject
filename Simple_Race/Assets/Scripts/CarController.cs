@@ -97,7 +97,6 @@ namespace UnityStandardAssets.Vehicles.Car{
             CapSpeed();
             //Set the handbrake.
             //Assuming that wheels 2 and 3 are the rear wheels.
-            Debug.Log(handbrake);
             if(handbrake > 0f){
                 var hbTorque = handbrake * m_MaxHandbrakeTorque;
                 m_WheelColliders[2].brakeTorque = hbTorque;
