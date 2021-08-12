@@ -39,7 +39,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
         // Use this for initialization
-        private void Start(){
+        private void Awake(){
             m_Rigidbody = gameObject.GetComponent<Rigidbody>();
             m_Rigidbody.isKinematic = false;
             m_Rigidbody.useGravity = true;
@@ -211,10 +211,12 @@ namespace UnityStandardAssets.Vehicles.Car{
             for(int i = 0; i < 4; i++) if(m_WheelEffects[i].PlayingAudio) return true;
             return false;
         }
-        public void ResetCar(){ // still carries input / momentum?
-            this.m_Rigidbody.velocity = Vector3.zero;
-            this.m_Rigidbody.angularVelocity = Vector3.zero;
-            this.m_Rigidbody.inertiaTensorRotation = Quaternion.identity;
+        public void ResetCar(Transform spawnTransform){
+            transform.rotation = new Quaternion(0f, -1f, 0f, 1f);
+            transform.localPosition = spawnTransform.localPosition;
+            m_Rigidbody.velocity = Vector3.zero;
+            m_Rigidbody.angularVelocity = Vector3.zero;
+            m_Rigidbody.inertiaTensorRotation = Quaternion.identity;
         }
     }
 }

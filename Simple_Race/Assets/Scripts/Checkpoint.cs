@@ -7,5 +7,11 @@ namespace Simple_Race{
         private void Awake(){
             checkpointIndex = Int32.Parse(Regex.Match(name,@"\d+").Value);
         }
+        public void EnableCollider(){
+
+        }
+        public void DisableCollider(){
+
+        }
     }
 }
