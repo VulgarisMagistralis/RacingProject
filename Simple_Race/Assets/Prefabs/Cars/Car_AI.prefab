@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 1
+  DecisionPeriod: 20
   TakeActionsBetweenDecisions: 1
 --- !u!114 &161003022333349979
 MonoBehaviour:
@@ -283,7 +283,8 @@ MonoBehaviour:
   currentAvgSpeed: 0
   fastestAvgSpeed: 0
   lapDistance: 0
-  offroadStartTime: 0
+  steeringVariation: 0
+  steeringVariationLowest: 999999
 --- !u!114 &161003022333349978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 12
     NumStackedVectorObservations: 50
     m_ActionSpec:
       m_NumContinuousActions: 4

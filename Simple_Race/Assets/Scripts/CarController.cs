@@ -29,17 +29,18 @@ namespace UnityStandardAssets.Vehicles.Car{
         private float m_GearFactor;
         private float m_OldRotation;
         private float m_CurrentTorque;
-        Rigidbody m_Rigidbody;
+        public Rigidbody m_Rigidbody;
         private const float k_ReversingThreshold = 0.01f;
         public bool Skidding { get; private set; }
         public float BrakeInput { get; private set; }
         public float CurrentSteerAngle{ get { return m_SteerAngle; }}
         public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude * 2.23693629f; }}
+        public Vector3 VehicleVelocity{get{ return m_Rigidbody.velocity; }}
         public float MaxSpeed{get { return m_Topspeed; }}
         public float Revs { get; private set; }
         public float AccelInput { get; private set; }
         // Use this for initialization
-        private void Start(){
+        private void Awake(){
             m_Rigidbody = gameObject.GetComponent<Rigidbody>();
             m_WheelMeshLocalRotations = new Quaternion[4];
             for(int i = 0; i < 4; i++) m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
@@ -89,22 +90,15 @@ namespace UnityStandardAssets.Vehicles.Car{
             handbrake = Mathf.Clamp(handbrake, 0, 1);          
             //Set the steer on the front wheels.
             //Assuming that wheels 0 and 1 are the front wheels.
-            m_SteerAngle = steering * m_MaximumSteerAngle;
-            m_WheelColliders[0].steerAngle = m_SteerAngle;
-            m_WheelColliders[1].steerAngle = m_SteerAngle;
+            m_WheelColliders[0].steerAngle = m_WheelColliders[1].steerAngle = steering * m_MaximumSteerAngle;
             SteerHelper();
             ApplyDrive(accel, footbrake);
             CapSpeed();
-            //Set the handbrake.
+            //Set and Release the handbrake.
             //Assuming that wheels 2 and 3 are the rear wheels.
-            if(handbrake > 0f){
-                var hbTorque = handbrake * m_MaxHandbrakeTorque;
-                m_WheelColliders[2].brakeTorque = hbTorque;
-                m_WheelColliders[3].brakeTorque = hbTorque;
-            }else{
-                m_WheelColliders[2].brakeTorque = 0;
-                m_WheelColliders[3].brakeTorque = 0;
-            }
+            if(handbrake > 0f) m_WheelColliders[2].brakeTorque = m_WheelColliders[3].brakeTorque = handbrake * m_MaxHandbrakeTorque;
+            else m_WheelColliders[2].brakeTorque = m_WheelColliders[3].brakeTorque = 0;       
+
             CalculateRevs();
             GearChanging();
             AddDownForce();
@@ -208,10 +202,15 @@ namespace UnityStandardAssets.Vehicles.Car{
             for(int i = 0; i < 4; i++) if(m_WheelEffects[i].PlayingAudio) return true;
             return false;
         }
-        public void ResetCar(){
-            this.m_Rigidbody.velocity = Vector3.zero;
-            this.m_Rigidbody.angularVelocity = Vector3.zero;
-            this.m_Rigidbody.inertiaTensorRotation = Quaternion.identity;
+        public void ResetCar(Transform spawnTransform){
+            transform.rotation = new Quaternion(0f, 0f, 0f, 1f);
+            transform.localPosition = spawnTransform.localPosition;
+            m_Rigidbody.velocity = default;
+            m_Rigidbody.angularVelocity = Vector3.zero;
+            m_Rigidbody.inertiaTensorRotation = Quaternion.identity;
+            AccelInput = 0;
+            BrakeInput = 0;
+
         }
     }
 }

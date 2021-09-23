@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 170825874706850240}
   - component: {fileID: 716620737624770371}
   - component: {fileID: 716620737624770380}
+  - component: {fileID: 7483922064560010166}
   m_Layer: 3
   m_Name: Track_1
   m_TagString: Tarmack
@@ -113,3 +114,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31861ef29a49a369a960c03448c81c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &7483922064560010166
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716620737624770381}
+  serializedVersion: 2
+  m_Mass: 100000000
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

@@ -6,6 +6,7 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using System.Collections.Generic;
 using UnityStandardAssets.Vehicles.Car;
+using System.Timers;
 /*
     -Checkpoint Collider En/Disbale is late
     -When stationary decrease points TIMERS
@@ -14,77 +15,62 @@ using UnityStandardAssets.Vehicles.Car;
 */
 namespace Simple_Race{
     public class Car_Agent : Agent{
-        static float largeValue = 999999f;
-        public CarController carController;
         private Timer idleTimer;
+        public Transform[] raycasts;
+        private Vector3 lastPos, currPos;
+        public CarController carController;
+        private Checkpoint previousCheckpoint;
+        private RayPerceptionSensorComponent3D sensorRays;
         [SerializeField] public Transform spawnTransform;
         [SerializeField] public List<Checkpoint> checkpoints;
-        private Checkpoint previousCheckpoint;
-        public int targetCheckpointIndex = 0, lapCount = 1, masksToCollide; //masks that sensor rays hit
-        public float lapStartTime, currentLapTime, fastestLapTime = largeValue, currentAvgSpeed = 0f, fastestAvgSpeed = 0f, lapDistance = 0f;
-        private Vector3 lastPos, currPos;
-        private bool onTrack;// indicates on or off track; using to end episode
-        private bool isStuck = false;
-        private void Start(){       
-            masksToCollide = LayerMask.GetMask("Track", "Ground");
-            Debug.Assert(LoadedCheckpoints(),"Checkpoints not loaded");
+        static float largeValue = 999999f;
+        public int targetCheckpointIndex, lapCount; //masks that sensor rays hit
+        public float lapStartTime = 0f, currentLapTime = 0f, fastestLapTime = largeValue,
+            currentAvgSpeed = 0f, fastestAvgSpeed = 0f, lapDistance = 0f, 
+            steeringVariation = 0f, steeringVariationLowest = largeValue;
+        private void Start(){
             PrepareTimer();
-            ResetParameters();
-            checkpoints.Sort((c1,c2) => c1.checkpointIndex.CompareTo(c2.checkpointIndex));
-        }  
-        private void FixedUpdate(){
-            RaycastHit hit1;
-            if(onTrack){
-                if(Physics.Raycast(transform.localPosition, transform.TransformDirection(Vector3.down), out hit1, 10f, masksToCollide))
-                    if(hit1.collider.gameObject.tag == "Ground"){
-                        onTrack = false;
-                        AddReward(-0.8f);
-                        EndEpisode();
-                    }else AddReward(0.5f);    
-            }else{
-                onTrack = true;
-                EndEpisode();
-            }
-            currPos = transform.localPosition;
-            Debug.Log(this.GetCumulativeReward());
-            lapDistance += Vector3.Distance(currPos,lastPos);
+            Debug.Assert(LoadedCheckpoints(),"Checkpoints not loaded");
+            checkpoints.Sort((c1,c2) => c1.checkpointIndex.CompareTo(c2.checkpointIndex));//ordered checkpoint list
+            sensorRays = this.GetComponent<RayPerceptionSensorComponent3D>();
         }
-        public override void OnEpisodeBegin(){ //reset parameters for each episode
-            ResetParameters();
-            lapCount = 1;
-            currentLapTime = 0;
-            currentAvgSpeed = 0;      
-            targetCheckpointIndex = 0;
-            carController.ResetCar();
+        private void FixedUpdate(){
+            Debug.Log(" Rewards "+ GetCumulativeReward());
+            if(this.GetCumulativeReward() < -50) TerminateEpisode(0);
+            if(Mathf.Abs(spawnTransform.localPosition.y - transform.localPosition.y) > 3) TerminateEpisode(-30); //need a better solution
+            lapDistance += (int)Mathf.Abs(Vector3.Distance(currPos, transform.localPosition));
+            currPos = transform.localPosition;
+        }
+        public override void OnEpisodeBegin(){
+            HardReset();
+            SoftReset();
+            EnableCheckpointColliders();
+
         }
         public override void CollectObservations(VectorSensor sensor){
-            sensor.AddObservation(Vector3.Dot(transform.forward, checkpoints[targetCheckpointIndex].transform.forward));
+            var checkpointDirection = (checkpoints[targetCheckpointIndex].transform.localPosition - carController.transform.localPosition).normalized;
+            sensor.AddObservation(Vector3.Dot(carController.m_Rigidbody.velocity.normalized, checkpointDirection));
+
+            sensor.AddObservation((checkpoints[targetCheckpointIndex].transform.localPosition - transform.localPosition).normalized);
+            sensor.AddObservation(carController.CurrentSpeed);
+            sensor.AddObservation(this.transform.forward);
+            sensor.AddObservation(Vector3.Distance(this.transform.localPosition, checkpoints[targetCheckpointIndex].transform.localPosition));            
         }
         public override void OnActionReceived(ActionBuffers actions){ //translate ai input to Move() parameters
-            carController.Move(actions.ContinuousActions[1], actions.ContinuousActions[0],
-            -actions.ContinuousActions[2], 0);
+            steeringVariation += Mathf.Abs(actions.ContinuousActions[1]);
+            if(actions.ContinuousActions[0] > 0) AddReward(4f);
+            if(actions.ContinuousActions[2] > 0) AddReward(-10);
+            //Debug.Log("input " +actions.ContinuousActions[1]+" "+ actions.ContinuousActions[0] +" "+actions.ContinuousActions[2]+" "+actions.ContinuousActions[3]);
+            carController.Move(actions.ContinuousActions[1], actions.ContinuousActions[0], -actions.ContinuousActions[2], actions.ContinuousActions[3]);
         }
-        private void OnTriggerEnter(Collider trigger) {
-            if(trigger.CompareTag("Checkpoint"))
-                if(targetCheckpointIndex == trigger.GetComponent<Checkpoint>().checkpointIndex){
-                    if(previousCheckpoint != null) previousCheckpoint.EnableCollider();
-                    trigger.GetComponent<Checkpoint>().DisableCollider();
-                    previousCheckpoint = trigger.GetComponent<Checkpoint>(); // not the best way to enable/disable checkpoints
-                    AddReward(3f);
-                    if(targetCheckpointIndex == checkpoints.Capacity - 1) EndLap();
-                    else targetCheckpointIndex++;           
-                }else AddReward(-0.4f);
-        }
-        private void EndLap(){ //change checkpoints
-            currentLapTime = Time.time - lapStartTime;
-            currentAvgSpeed = lapDistance / currentLapTime;
-            Debug.Log("Time: " + currentLapTime + "Dist: " + currentAvgSpeed);
-            if(IsFastestAvgSpeed()) AddReward(0.4f);
-            if(IsFastestLap()) AddReward(0.6f);
-            if(SteeringDerivationLess()) AddReward(0.8f);
-            targetCheckpointIndex = 0;
-            lapDistance = 0;
-            lapCount++;
+        private void OnTriggerEnter(Collider trigger){
+            if(!trigger.CompareTag("Checkpoint")) return; //IDC except checkpoints
+            if(targetCheckpointIndex != trigger.GetComponent<Checkpoint>().checkpointIndex) TerminateEpisode(-100); //wrong checkpoint = punishment
+            ToggleCheckpointCollider(trigger);
+            AddReward(20f + 20 * targetCheckpointIndex); // reward for passing correct checkpoint
+            if(targetCheckpointIndex == 1) SoftReset(); // Reset Lap parameters
+            targetCheckpointIndex = (targetCheckpointIndex + 1) % checkpoints.Capacity; //cycling checkpoints
+
         }
         public override void Heuristic(in ActionBuffers actionsOut){
             int accelerate = 0, brake = 0, steer = 0, handbrake = 0;
@@ -99,31 +85,53 @@ namespace Simple_Race{
             continuousActions[2] = brake;
             continuousActions[3] = handbrake;
         }
-        private void VehicleStuck(object source, ElapsedEventArgs e){// @ every 3 seconds 
-            if(Vector3.Distance(lastPos, currPos) < 2){
-                isStuck = true;
-                AddReward(-0.2f);
-            }else{
-                isStuck = false;
-                AddReward(0.4f);
-            } 
-            lastPos = currPos;
-        }
-        private void ResetParameters(){
-            onTrack = true;
-            isStuck = false;
-            lastPos = spawnTransform.localPosition;
-            transform.rotation = new Quaternion(0f, -1f, 0f, 1f);
-            transform.localPosition = spawnTransform.localPosition;
-        }
         private void PrepareTimer(){
-            idleTimer = new Timer(); // @ 3 second mark check if vehicle stuck then toggle bool
+            idleTimer = new Timer(); // @ Interval/1000 seconds mark check if vehicle stuck then toggle bool
             idleTimer.Elapsed += new ElapsedEventHandler(VehicleStuck);
             idleTimer.Interval = 3000;
             idleTimer.AutoReset = true;
             idleTimer.Enabled = true;
             idleTimer.Start();
         }
+        private void TerminateEpisode(int finalReward){
+            //Debug.Log(finalReward);
+            //currentLapTime = Time.time - lapStartTime;
+            //currentAvgSpeed = lapDistance / currentLapTime;
+            //EvaluateEpisodePerformance();
+            AddReward(finalReward);
+            EndEpisode();
+        }
+        private void HardReset(){
+            lapCount = 1;
+            targetCheckpointIndex = 0;
+            lastPos = spawnTransform.localPosition;
+            carController.ResetCar(spawnTransform);
+        }
+        private void SoftReset(){
+            lapDistance = 0;
+            currentLapTime = 0;
+            currentAvgSpeed = 0;
+            lapStartTime = Time.time;
+            lapCount++;
+        }
+        private void EvaluateEpisodePerformance(){
+            if(IsFastestAvgSpeed()) AddReward(4f);
+            if(IsFastestLap()) AddReward(6f);
+            if(SteeringDerivationLess()) AddReward(8f);
+        }
+        private void ToggleCheckpointCollider(Collider trigger){
+            if(previousCheckpoint != null) previousCheckpoint.EnableCollider();
+            trigger.GetComponent<Checkpoint>().DisableCollider();
+            previousCheckpoint = trigger.GetComponent<Checkpoint>();
+        }
+        private void VehicleStuck(object source, ElapsedEventArgs e){// @ every 3 seconds
+            if(Vector3.Distance(lastPos, currPos) < 10) TerminateEpisode(-100);
+            lastPos = currPos;
+        }
+        private bool SteeringDerivationLess(){
+            if(steeringVariation < steeringVariationLowest) return false;
+            steeringVariationLowest = steeringVariation; return true;
+
         private bool SteeringDerivationLess(){
             return false;
         }
@@ -140,5 +148,7 @@ namespace Simple_Race{
             if(fastestAvgSpeed > currentAvgSpeed) return false;
             fastestAvgSpeed = currentAvgSpeed; return true;
         }
+        private void EnableCheckpointColliders(){
+            foreach(Checkpoint checkpoint in checkpoints) checkpoint.EnableCollider();}
     }
 }
