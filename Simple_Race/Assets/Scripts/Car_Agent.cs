@@ -1,15 +1,17 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Timers;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using System.Collections.Generic;
 using UnityStandardAssets.Vehicles.Car;
 using System.Timers;
 /*
--Checkpoint Collider En/Disbale is late
--Function to end lap
--Find a way to detect off road
+    -Checkpoint Collider En/Disbale is late
+    -When stationary decrease points TIMERS
+    
+
 */
 namespace Simple_Race{
     public class Car_Agent : Agent{
@@ -43,6 +45,7 @@ namespace Simple_Race{
             HardReset();
             SoftReset();
             EnableCheckpointColliders();
+
         }
         public override void CollectObservations(VectorSensor sensor){
             var checkpointDirection = (checkpoints[targetCheckpointIndex].transform.localPosition - carController.transform.localPosition).normalized;
@@ -67,14 +70,15 @@ namespace Simple_Race{
             AddReward(20f + 20 * targetCheckpointIndex); // reward for passing correct checkpoint
             if(targetCheckpointIndex == 1) SoftReset(); // Reset Lap parameters
             targetCheckpointIndex = (targetCheckpointIndex + 1) % checkpoints.Capacity; //cycling checkpoints
+
         }
         public override void Heuristic(in ActionBuffers actionsOut){
             int accelerate = 0, brake = 0, steer = 0, handbrake = 0;
             if(Input.GetKey(KeyCode.UpArrow)) accelerate = 1;
-            if(Input.GetKey(KeyCode.LeftArrow)) steer = -1;
-            if(Input.GetKey(KeyCode.RightArrow)) steer = 1;            
-            if(Input.GetKey(KeyCode.DownArrow)) brake = 1;
             if(Input.GetKey(KeyCode.Space)) handbrake = 1;
+            if(Input.GetKey(KeyCode.LeftArrow)) steer = -1;
+            if(Input.GetKey(KeyCode.RightArrow)) steer = 1;
+            if(Input.GetKey(KeyCode.DownArrow)) brake = 1;
             ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
             continuousActions[0] = accelerate;
             continuousActions[1] = steer;
@@ -127,6 +131,9 @@ namespace Simple_Race{
         private bool SteeringDerivationLess(){
             if(steeringVariation < steeringVariationLowest) return false;
             steeringVariationLowest = steeringVariation; return true;
+
+        private bool SteeringDerivationLess(){
+            return false;
         }
         private bool LoadedCheckpoints(){
             checkpoints = GameObject.FindObjectsOfType<Checkpoint>().ToList<Checkpoint>();

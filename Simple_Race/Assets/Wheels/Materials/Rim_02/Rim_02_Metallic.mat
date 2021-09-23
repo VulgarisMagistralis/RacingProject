@@ -144,6 +144,9 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+
+    m_Ints: []
+
     m_Floats:
     - _AORemapMax: 0.99674314
     - _AORemapMin: 0
@@ -195,7 +198,9 @@ Material:
     - _EnableSpecularOcclusion: 0
     - _EnableWind: 0
     - _EnergyConservingSpecularColor: 1
-    - _GlossMapScale: 0.8
+
+    - _GlossMapScale: 1
+
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HdrpVersion: 2
@@ -280,3 +285,5 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
+
+  m_BuildTextureStacks: []
