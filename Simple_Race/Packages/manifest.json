@@ -1,11 +1,13 @@
 {
   "dependencies": {
+    "com.unity.barracuda": "2.0.0-pre.6",
     "com.unity.collab-proxy": "1.5.7",
     "com.unity.ide.vscode": "1.2.3",
     "com.unity.ml-agents": "git+https://github.com/Unity-Technologies/ml-agents.git?path=com.unity.ml-agents#release_18",
-    "com.unity.test-framework": "1.1.27",
+    "com.unity.sysroot.linux-x86_64": "0.1.15-preview",
+    "com.unity.test-framework": "1.1.29",
     "com.unity.textmeshpro": "3.0.6",
-    "com.unity.toolchain.linux-x86_64": "0.1.18-preview",
+    "com.unity.toolchain.linux-x86_64": "0.1.19-preview",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
