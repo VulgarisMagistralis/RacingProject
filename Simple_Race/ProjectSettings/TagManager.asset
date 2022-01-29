@@ -8,6 +8,8 @@ TagManager:
   - Tarmack
   - Checkpoint
   - Ground
+  - Training_Env
+  - Training_Cluster
   layers:
   - Default
   - TransparentFX
