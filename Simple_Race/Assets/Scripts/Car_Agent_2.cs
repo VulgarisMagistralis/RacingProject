@@ -6,6 +6,8 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using UnityStandardAssets.Vehicles.Car;
 using System.Timers;
+using System.Net.Sockets;
+
 namespace Simple_Race{
     /*
         ? CHANGE EPISODE TO SESSION FUNC NAMES
@@ -52,17 +54,17 @@ namespace Simple_Race{
         #region Rewards
             [Header("Rewards")]
                 [Tooltip("Peanlty for leaving Track")]
-                public float LeftTrackPenalty = -10f;
+                public float LeftTrackPenalty = -0.5f;
                 [Tooltip("Passed the correct Checkpoint")]
-                public float PassCheckpointReward = 10f;
+                public float PassCheckpointReward = 0.9f;
                 [Tooltip("Reward for getting closer to the target Checkpoint")]
-                public float CheckpointProximityReward = 2f;
+                public float CheckpointProximityReward = 0.2f;
                 [Tooltip("Fast Track time Reward")]
-                public float SpeedReward = 10f;
+                public float SpeedReward = 0.5f;
                 [Tooltip("Reward for Acceleration")]
-                public float AccelerationReward = 3f;
+                public float AccelerationReward = 0.3f;
                 [Tooltip("Penalty for being stuck")]
-                public float StuckPenalty = -20f;
+                public float StuckPenalty = -0.9f;
         #endregion
         #region ResetParameters
             [Header("Inference Reset Params")]
@@ -103,17 +105,16 @@ namespace Simple_Race{
                 [Tooltip("Total amount of Rewards")]
                 public float accummulatedReward = 0f;
         #endregion
-        /*
-            ? REMOVE PLS
-        */
         [SerializeField] public Transform spawnTransform;
         private bool endEpisode = false;
         public int idleRadius = 5;
-        private void Awake(){carController = GetComponent<CarController>();}        
+        private void Awake(){
+            carController = GetComponent<CarController>();
+        }        
         private void Start(){
             PrepareTimer();
             Debug.Assert(LoadedCheckpoints(),"Checkpoints not loaded");
-            Checkpoints.Sort((c1,c2) => c1.checkpointIndex.CompareTo(c2.checkpointIndex));//ordered checkpoint list
+            Checkpoints.Sort((c1,c2) => c1.checkpointIndex.CompareTo(c2.checkpointIndex));
         }
         private void Update() {
             if(!endEpisode) return;
@@ -123,16 +124,18 @@ namespace Simple_Race{
         private void LateUpdate() {
             if(ShowRaycasts) Debug.DrawRay(transform.position, Vector3.down * GroundCastDistance, Color.cyan);
             currentPosition = transform.position;
-            if(GetCumulativeReward() < 0) TerminateEpisode(0);
+            if(GetCumulativeReward() < -30) TerminateEpisode(0);
         }
         /*
             ? check dot results
         */
         public override void CollectObservations(VectorSensor sensor){
+            if(!gameObject.activeInHierarchy) return;
             endEpisode = false;
+            Vector3 direction = Vector3.zero;
             accummulatedReward = 0;
-            sensor.AddObservation(carController.VehicleVelocity);
-            var direction = (Checkpoints[targetCheckpointIndex].transform.position - carController.transform.position).normalized;
+            sensor.AddObservation(carController.VehicleVelocity);        
+            direction = (Checkpoints[targetCheckpointIndex].transform.position - carController.transform.position).normalized;
             sensor.AddObservation(Vector3.Dot(carController.VehicleVelocity.normalized, direction));
             sensor.AddObservation(Vector3.Dot(carController.transform.forward, direction));
             if(ShowRaycasts) Debug.DrawLine(AgentSensorTransform.position, Checkpoints[targetCheckpointIndex].transform.position, Color.blue);
@@ -143,16 +146,18 @@ namespace Simple_Race{
                     Debug.DrawRay(AgentSensorTransform.position, currentSensor.Transform.forward * currentSensor.HitValidationDistance, Color.red);
                     if(hit && hitInfo.distance < currentSensor.HitValidationDistance) Debug.DrawRay(hitInfo.point, Vector3.up * 3.0f, Color.magenta);
                 }
-                if(hit && (hitInfo.distance < currentSensor.HitValidationDistance)){
+                if(hit && (hitInfo.collider.tag == "Ground") && (hitInfo.distance < currentSensor.HitValidationDistance)){
                     accummulatedReward += LeftTrackPenalty;
                     endEpisode = true;
-                }                
+                }
                 sensor.AddObservation(hit ? hitInfo.distance : currentSensor.RayDistance);
             }
             sensor.AddObservation(carController.AccelInput);
             AddReward(AccelerationReward * (carController.AccelInput > 0 ? 1 : 0));
             sensor.AddObservation(carController.BrakeInput);
             AddReward(StuckPenalty * (carController.BrakeInput == 0 ? 0 : 1));
+            sensor.AddObservation(carController.HandbrakeInput);
+            AddReward(StuckPenalty * (carController.HandbrakeInput == 0 ? 0 : 1));
         }
         /*
             !3 point fields from going to TargetCheckpoint, accelerating without braking and speeding reward
@@ -223,6 +228,7 @@ namespace Simple_Race{
             !Starting a new Episode
         */
         public override void OnEpisodeBegin(){
+            
             HardReset();
             SoftReset();
         }        

@@ -152,10 +152,9 @@ GameObject:
   - component: {fileID: 5703420138607283241}
   - component: {fileID: 5703420138607385259}
   - component: {fileID: 161003022333349972}
-  - component: {fileID: 161003022333349979}
-  - component: {fileID: 161003022333349978}
   - component: {fileID: 161003022333349977}
   - component: {fileID: 161003022333349976}
+  - component: {fileID: 8071996062883163098}
   m_Layer: 0
   m_Name: Car_AI
   m_TagString: Player
@@ -241,6 +240,7 @@ MonoBehaviour:
   m_RevRangeBoundary: 1
   m_SlipLimit: 0.3
   m_BrakeTorque: 20000
+  m_Rigidbody: {fileID: 0}
 --- !u!114 &161003022333349972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,65 +255,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 20
   TakeActionsBetweenDecisions: 1
---- !u!114 &161003022333349979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5703420138601901859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 499b4758eaa47c03cb0b6bdd8d75748d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  carController: {fileID: 5703420138607385259}
-  spawnTransform: {fileID: 0}
-  checkpoints: []
-  targetCheckpointIndex: 0
-  lapCount: 1
-  masksToCollide: 0
-  lapStartTime: 0
-  currentLapTime: 0
-  fastestLapTime: 99999
-  currentAvgSpeed: 0
-  fastestAvgSpeed: 0
-  lapDistance: 0
-  steeringVariation: 0
-  steeringVariationLowest: 999999
---- !u!114 &161003022333349978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5703420138601901859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: RayPerceptionSensor
-  m_DetectableTags:
-  - Checkpoint
-  - Tarmack
-  - Ground
-  m_RaysPerDirection: 26
-  m_MaxRayDegrees: 180
-  m_SphereCastRadius: 0.82
-  m_RayLength: 110
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 328
-  m_ObservationStacks: 2
-  rayHitColor: {r: 1, g: 0, b: 0.85910463, a: 1}
-  rayMissColor: {r: 0, g: 0.8028641, b: 1, a: 1}
-  m_StartVerticalOffset: 1.01
-  m_EndVerticalOffset: -0.9
 --- !u!114 &161003022333349977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +301,59 @@ MonoBehaviour:
   NumStepsToRecord: 0
   DemonstrationName: Demo_Test
   DemonstrationDirectory: Demos
+--- !u!114 &8071996062883163098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703420138601901859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e10b6a32f48dd259a469e997a181870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  carController: {fileID: 0}
+  Mask:
+    serializedVersion: 2
+    m_Bits: 0
+  Sensors: []
+  Checkpoints: []
+  ChekpointMask:
+    serializedVersion: 2
+    m_Bits: 0
+  AgentSensorTransform: {fileID: 0}
+  LeftTrackPenalty: -10
+  PassCheckpointReward: 10
+  CheckpointProximityReward: 2
+  SpeedReward: 10
+  AccelerationReward: 3
+  StuckPenalty: -20
+  OutOfBoundsMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TrackMask:
+    serializedVersion: 2
+    m_Bits: 0
+  GroundCastDistance: 0
+  ShowRaycasts: 0
+  lapCount: 0
+  lapStartTime: 0
+  currentLapTime: 0
+  fastestLapTime: 999999
+  currentAvgSpeed: 0
+  fastestAvgSpeed: 0
+  lapDistance: 0
+  steeringVariation: 0
+  steeringVariationLowest: 999999
+  targetCheckpointIndex: 0
+  accummulatedReward: 0
+  spawnTransform: {fileID: 0}
+  idleRadius: 5
 --- !u!1 &5703420138601901861
 GameObject:
   m_ObjectHideFlags: 0

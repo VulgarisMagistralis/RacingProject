@@ -33,6 +33,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         private const float k_ReversingThreshold = 0.01f;
         public bool Skidding { get; private set; }
         public float BrakeInput { get; private set; }
+        public float HandbrakeInput {get; private set;}
         public float CurrentSteerAngle{ get { return m_SteerAngle; }}
         public float CurrentSpeed{ get { return m_Rigidbody.velocity.magnitude * 2.23693629f; }}
         public Vector3 VehicleVelocity{get{ return m_Rigidbody.velocity; }}
@@ -42,23 +43,28 @@ namespace UnityStandardAssets.Vehicles.Car{
         // Use this for initialization
         private void Awake(){
             m_Rigidbody = gameObject.GetComponent<Rigidbody>();
+            m_Rigidbody.isKinematic = false;
+            m_Rigidbody.useGravity = true;
+            m_Rigidbody.WakeUp();
+            m_Rigidbody.AddForce(new Vector3(10,0,0));
             m_WheelMeshLocalRotations = new Quaternion[4];
             for(int i = 0; i < 4; i++) m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
             m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
             m_MaxHandbrakeTorque = float.MaxValue;
             m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
+            m_Rigidbody.constraints = RigidbodyConstraints.None;
         }
         private void GearChanging(){
-            float f = Mathf.Abs(CurrentSpeed / MaxSpeed);
-            float upgearlimit = (1 / (float) NoOfGears) * (m_GearNum + 1);
-            float downgearlimit = (1 / (float) NoOfGears) * m_GearNum;
-            if(m_GearNum > 0 && f < downgearlimit) m_GearNum--;
-            if(f > upgearlimit && (m_GearNum < (NoOfGears - 1))) m_GearNum++;
+            float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
+            float upgearlimit = (1/(float) NoOfGears)*(m_GearNum + 1);
+            float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
+            if (m_GearNum > 0 && f < downgearlimit) m_GearNum--;
+            if (f > upgearlimit && (m_GearNum < (NoOfGears - 1))) m_GearNum++;
         }
         // simple function to add a curved bias towards 1 for a value in the 0-1 range
-        private static float CurveFactor(float factor){ return 1 - (1 - factor) * (1 - factor);}
+        private static float CurveFactor(float factor){ return 1 - (1 - factor)*(1 - factor);}
         // unclamped version of Lerp, to allow value to exceed the from-to range
-        private static float ULerp(float from, float to, float value){ return (1.0f - value) * from + value * to; }
+        private static float ULerp(float from, float to, float value){ return (1.0f - value)*from + value*to; }
         private void CalculateGearFactor(){
             float f = (1 / (float) NoOfGears);
             // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
@@ -76,7 +82,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
         }
         public void Move(float steering, float accel, float footbrake, float handbrake) {
-            for(int i = 0; i < 4; i++){
+            for(int i = 0; i < 4; i++) {
                 Quaternion quat;
                 Vector3 position;
                 m_WheelColliders[i].GetWorldPose(out position, out quat);
@@ -87,7 +93,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             steering = Mathf.Clamp(steering, -1, 1);
             AccelInput = accel = Mathf.Clamp(accel, 0, 1);
             BrakeInput = footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
-            handbrake = Mathf.Clamp(handbrake, 0, 1);          
+            HandbrakeInput = handbrake = Mathf.Clamp(handbrake, 0, 1);          
             //Set the steer on the front wheels.
             //Assuming that wheels 0 and 1 are the front wheels.
             m_WheelColliders[0].steerAngle = m_WheelColliders[1].steerAngle = steering * m_MaximumSteerAngle;
@@ -98,7 +104,6 @@ namespace UnityStandardAssets.Vehicles.Car{
             //Assuming that wheels 2 and 3 are the rear wheels.
             if(handbrake > 0f) m_WheelColliders[2].brakeTorque = m_WheelColliders[3].brakeTorque = handbrake * m_MaxHandbrakeTorque;
             else m_WheelColliders[2].brakeTorque = m_WheelColliders[3].brakeTorque = 0;       
-
             CalculateRevs();
             GearChanging();
             AddDownForce();
@@ -107,7 +112,7 @@ namespace UnityStandardAssets.Vehicles.Car{
         }
         private void CapSpeed() {
             float speed = m_Rigidbody.velocity.magnitude;
-            switch(m_SpeedType) {
+            switch (m_SpeedType) {
                 case SpeedType.MPH:
                     speed *= 2.23693629f;
                     if(speed > m_Topspeed) m_Rigidbody.velocity = (m_Topspeed / 2.23693629f) * m_Rigidbody.velocity.normalized;
@@ -127,7 +132,7 @@ namespace UnityStandardAssets.Vehicles.Car{
                 if(CurrentSpeed > 5 && Vector3.Angle(transform.forward, m_Rigidbody.velocity) < 50f) m_WheelColliders[i].brakeTorque = m_BrakeTorque*footbrake;
                 else if(footbrake > 0){
                     m_WheelColliders[i].brakeTorque = 0f;
-                    m_WheelColliders[i].motorTorque = -m_ReverseTorque * footbrake;
+                    m_WheelColliders[i].motorTorque = -m_ReverseTorque*footbrake;
                 }
             }
         }
@@ -172,7 +177,7 @@ namespace UnityStandardAssets.Vehicles.Car{
             switch(m_CarDriveType) {
                 case CarDriveType.FourWheelDrive:
                     // loop through all wheels
-                    for(int i = 0; i < 4; i++) {
+                    for (int i = 0; i < 4; i++) {
                         m_WheelColliders[i].GetGroundHit(out wheelHit);
                         AdjustTorque(wheelHit.forwardSlip);
                     }
@@ -210,7 +215,6 @@ namespace UnityStandardAssets.Vehicles.Car{
             m_Rigidbody.inertiaTensorRotation = Quaternion.identity;
             AccelInput = 0;
             BrakeInput = 0;
-
         }
     }
 }
