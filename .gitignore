@@ -70,3 +70,6 @@ Demos/
 Assets/Demonstrations/
 
 Simple_Race/Assets/ML-Agents/Timers/SampleScene_timers.json
+Simple_Race/Assets/ArcGISMapsSDK/Binaries/macOS/x64/libruntimecore.dylib
+Simple_Race/Assets/ArcGISMapsSDK/Binaries/iOS/arm64/Runtimecore.framework/Runtimecore
+Simple_Race/Assets/ArcGISMapsSDK/Binaries/iOS/simx64/Runtimecore.framework/Runtimecore
