@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UXML
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="UnityEngine.UIElements"
+xmlns:e="UnityEditor.UIElements"
+
+xsi:noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd"
+xsi:schemaLocation="
+                        UnityEngine.UIElements ../../../../../../UIElementsSchema/UnityEngine.UIElements.xsd
+                        UnityEditor.UIElements ../../../../../../UIElementsSchema/UnityEditor.UIElements.xsd
+                        UnityEditor.PackageManager.UI ../../../../../../UIElementsSchema/UnityEditor.PackageManager.UI.xsd">
+
+    <VisualElement class="table-row">
+
+        <Box class="table-row-top">
+
+            <VisualElement class="table-cell table-cell-accordian">
+                <Button name="layer-accordian-toggle"></Button>
+                <Image class="table-cell-icon accordian-icon" picking-mode="Ignore"/>
+            </VisualElement>
+
+            <VisualElement class="table-cell table-cell-visibility">
+                <Button name="layer-visibility-toggle"  class="custom-toggle"></Button>
+                <Image class="table-cell-icon visibility-icon" picking-mode="Ignore"/>
+            </VisualElement>
+    
+            <VisualElement class="table-cell table-cell-moveup">
+                <Button name="layer-moveup-toggle"  class="custom-toggle"></Button>
+                <Image class="table-cell-icon moveup-icon" picking-mode="Ignore"/>
+            </VisualElement>
+    
+            <VisualElement class="table-cell table-cell-movedown">
+                <Button name="layer-movedown-toggle"  class="custom-toggle"></Button>
+                <Image class="table-cell-icon movedown-icon" picking-mode="Ignore"/>
+            </VisualElement>
+    
+            <VisualElement class="table-cell table-cell-layer-name">
+                <TextField class="layer-name" name="layer-name"/>
+            </VisualElement>
+    
+            <VisualElement class="table-cell table-cell-opacity">
+                <TextField class="layer-opacity-value" name="layer-opacity-text" />
+            </VisualElement>
+    
+            <VisualElement class="table-cell table-cell-layer-delete">
+                <Button name="delete-layer-toggle" class="custom-toggle"/>
+                <Image class="table-cell-icon delete-icon" picking-mode="Ignore"/>
+            </VisualElement>
+    
+        </Box>
+
+        <Box class="table-row-bottom">
+
+                <VisualElement class="table-cell table-cell-layer-copy">
+                    <Button name="copy-layer-toggle" class="custom-toggle"/>
+                    <Image class="table-cell-icon clipboard-icon" picking-mode="Ignore"/>
+                </VisualElement>
+
+                <VisualElement class="table-cell table-cell-layer-name table-cell-layer-source">
+                    <TextField class="layer-name" name="layer-source"/>
+                </VisualElement>
+    
+                <VisualElement class="table-cell table-cell-layer-select-source">
+                    <Button name="select-layer-source-toggle" class="custom-toggle"/>
+                    <Image class="table-cell-icon select-file-icon" picking-mode="Ignore"/>
+                </VisualElement>
+
+                <VisualElement class="category-box-row slider-with-label base-selector-wrapper" name="select-layer-type-wrapper">
+                </VisualElement>
+        </Box>
+
+    </VisualElement>
+
+</UXML>

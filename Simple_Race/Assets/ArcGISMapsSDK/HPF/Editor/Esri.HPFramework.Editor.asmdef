@@ -1,0 +1,17 @@
+{
+    "name": "Esri.HPFramework.Editor",
+    "references": [
+        "GUID:eb16ba553b29a6c44b83ab0a146797ba"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
