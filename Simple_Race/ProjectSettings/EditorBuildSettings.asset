@@ -17,4 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WorldMapScene.unity
     guid: b64407ae9a96c9da7acf8a17a7d2e7be
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 2be98140ef9bee5bdab146b4da621109, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: e5cbddf0dcef0bf85898a8bc4afaca2f, type: 2}

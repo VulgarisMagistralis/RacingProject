@@ -14,8 +14,8 @@ namespace UnityStandardAssets.Vehicles.Car{
 			Application.targetFrameRate = 60;
 			instance = this;
 			input_controller = GetComponentInChildren<InputController>();
-		    trackNumber = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("track_no", trackNumber);
-			trainingClusters = GameObject.FindObjectsOfType<ClusterManager>();
+		   /*  trackNumber = (int)Academy.Instance.EnvironmentParameters.GetWithDefault("track_no", trackNumber);
+			trainingClusters = GameObject.FindObjectsOfType<ClusterManager>(); */
 		}
 		public void CheckAcademy(){
 			
