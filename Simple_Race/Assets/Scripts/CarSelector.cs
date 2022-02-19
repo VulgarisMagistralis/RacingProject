@@ -8,7 +8,8 @@ public class CarSelector : MonoBehaviour{
     }
     private void SelectCar(int carIndex){
         for(int i = 0; i < transform.childCount; i++){
-            transform.GetChild(i).gameObject.transform.position = platformCenter.position;
+            transform.GetChild(i).gameObject.transform.localPosition = platformCenter.localPosition;
+            transform.GetChild(i).gameObject.transform.rotation = platformCenter.rotation;
             transform.GetChild(i).gameObject.SetActive(i == carIndex);
         }
     }
