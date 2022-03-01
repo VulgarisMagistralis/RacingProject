@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=0ab4b1b6b3e5e98c0be223c82b4c4394&amp;type=3#Style" />
+    <ui:VisualElement name="Background" style="background-color: rgba(14, 0, 0, 0); height: 100%; background-image: none; width: 100%; flex-grow: 1; align-items: flex-start; justify-content: flex-start; display: flex; -unity-text-outline-color: rgba(0, 0, 0, 0);">
+        <ui:Label text="RACING PROJECT" display-tooltip-when-elided="true" name="Tittle" focusable="false" style="flex-shrink: 0; flex-grow: 0; opacity: 0.75; -unity-text-align: upper-left; height: auto; bottom: auto; right: auto; width: auto; font-size: 50px; -unity-font-style: bold-and-italic; left: 1%; top: 1%; position: absolute; color: rgb(0, 0, 0);" />
+        <ui:GroupBox name="MenuGroupBox" style="align-items: flex-start; justify-content: center; overflow: visible; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; white-space: normal; top: 35%; display: flex;">
+            <ui:Button text="CAREER" display-tooltip-when-elided="true" name="CareerButton" class="button-style" />
+            <ui:Button text="QUICK RACE" display-tooltip-when-elided="true" name="QuickRaceButton" class="button-style" />
+            <ui:Button text="OPTIONS" display-tooltip-when-elided="true" name="OptionsButton" class="button-style" />
+            <ui:Button text="QUIT" display-tooltip-when-elided="true" name="QuitButton" class="button-style" />
+        </ui:GroupBox>
+        <ui:GroupBox name="OptionsGroupBox" style="display: none; left: 1%; top: 10%; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; flex-grow: 0; flex-shrink: 1;">
+            <ui:Label text="OPTIONS" display-tooltip-when-elided="true" name="Tittle" style="font-size: 30px; -unity-font-style: bold-and-italic;" />
+            <ui:ScrollView>
+                <ui:Toggle label="Toggle" />
+                <ui:MinMaxSlider picking-mode="Ignore" label="Min/Max Slider" min-value="10" max-value="12" low-limit="-10" high-limit="40" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" />
+                <ui:Slider picking-mode="Ignore" label="Slider" value="42" high-value="100" />
+                <ui:RadioButtonGroup label="Radio Button Group" value="-1">
+                    <ui:RadioButton label="Radio Button" />
+                    <ui:RadioButton label="Radio Button" />
+                    <ui:RadioButton label="Radio Button" />
+                </ui:RadioButtonGroup>
+                <ui:Foldout text="Foldout" />
+            </ui:ScrollView>
+            <ui:Button text="Back" display-tooltip-when-elided="true" name="OptionsBackButton" style="bottom: auto; left: 90%; top: 90%; right: 0;" />
+        </ui:GroupBox>
+        <ui:GroupBox name="CareerGroupBox" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-shrink: 0; height: 50%; width: 80%; align-items: center; justify-content: flex-start; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 50px; left: 10%; top: 25%; display: none;">
+            <ui:Label text="PLAYERNAME" display-tooltip-when-elided="true" name="PlayerName" style="top: 0; right: 0; align-items: center; -unity-text-align: upper-center; white-space: normal; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; left: auto; -unity-font-style: italic; color: rgb(255, 0, 22);" />
+            <ui:Button text="CREATE" display-tooltip-when-elided="true" name="NewPlayerButton" class="button-style" style="top: 110%; right: -50%; overflow: visible; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; -unity-font-style: bold;" />
+            <ui:Button text="BACK" display-tooltip-when-elided="true" name="CareerBackButton" class="button-style" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; bottom: auto; top: 100%; right: 50%; width: auto; -unity-font-style: bold;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>
